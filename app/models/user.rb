@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_presence_of :username
   validates_uniqueness_of :username
+
+  has_many :items
   
   def self.authenticate(username, password)
     user = find_by_username(username)

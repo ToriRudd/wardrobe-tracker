@@ -1,13 +1,13 @@
 class ItemsController < ApplicationController
   before_filter :signed_in_user
-  before_filter :correct_user
+  before_filter :correct_user_for_item, only: [:show, :delete]
 
   def show
     @item = Item.find(params[:id])
   end
 
   def index
-    @items = Item.all
+    @items = current_user.items
   end
 
   def new
@@ -17,6 +17,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(params[:item])
     if @item.save
+      current_user.items << @item
       flash[:success] = "Item added"
       redirect_to wardrobe_path
     else
@@ -50,8 +51,8 @@ class ItemsController < ApplicationController
       redirect_to log_in_path, notice: "Please log in" unless signed_in?
     end
 
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user?(@user)
+    def correct_user_for_item
+      item = Item.find(params[:id])
+      redirect_to log_in_path unless item.user_id == curent_user.id
     end
 end
