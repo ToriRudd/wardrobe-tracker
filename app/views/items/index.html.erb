@@ -1,0 +1,15 @@
+<h1> Your Wardrobe </h1>
+
+<ul class="items">
+  <% @items.each do |item| %>
+    <li>
+      <%= link_to item.name, item_path(item) %>
+      <%= item.main_colour %>
+      <%= item.description %>
+      <%= item.size %>
+      <%= link_to "Edit", edit_item_path(item) %>  
+      <%= link_to "Delete", item, method: :delete, data: { confirm: "You sure?" } %>
+    </li>
+  <% end %>
+</ul>
+<p class="button"><%= link_to "Add new item!", new_item_path%></p>
