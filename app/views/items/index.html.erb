@@ -5,6 +5,7 @@
     <li>
       <%= link_to item.name, item_path(item) %>
       <%= item.main_colour %>
+      <%= item.main_category %>
       <%= item.description %>
       <%= item.size %>
       <%= link_to "Edit", edit_item_path(item) %>  
